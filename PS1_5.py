@@ -16,13 +16,13 @@
 # 5.2 [5 points] Count the total number of suitable solutions for any integer i from 1 to 100, assign the count to a list called Total_solutions. Plot the list Total_solutions, so which number(s) yields the maximum and minimum of Total_solutions?
 # 
 
-# In[2]:
+# In[1]:
 
 
 import numpy as np
 
 
-# In[1]:
+# In[2]:
 
 
 def calcp(num_x):
@@ -35,7 +35,7 @@ def calcc(num_xi):
     return num_xi+''
 
 
-# In[12]:
+# In[3]:
 
 
 def Find_expression(num):
@@ -70,25 +70,43 @@ def Find_expression(num):
     return [test[int(index[i])] for i in range(len(index))]
 
 
-# In[13]:
+# In[4]:
 
 
 Find_expression(100)
 
 
-# In[19]:
+# In[5]:
+
+
+import matplotlib.pyplot as plt
+
+
+# In[6]:
 
 
 def Total_solutions():
-    tot_sols = [len(Find_expression(i)) for i in range(1,101)]
-    sols_min = np.ma.min(tot_sols)
-    sols_max = np.ma.max(tot_sols)
-    # return the [minimum/maximun steps (int), which number(s) generates the minimum/maximum steps (array)]
-    return [sols_min,np.argwhere(tot_sols==sols_min)],[sols_max,np.argwhere(tot_sols==sols_max)]
+    tot_sols = [len(Find_expression(i)) for i in range(101)]
+    return tot_sols
 
 
-# In[20]:
+# In[7]:
 
 
-Total_solutions()
+tot_sols = Total_solutions()
+
+
+# In[8]:
+
+
+x = np.arange(101)
+pltdata = np.array(tot_sols)
+plt.plot(x,pltdata)
+
+sols_min = [np.argwhere(pltdata==pltdata.min()),pltdata.min()]
+sols_max = [np.argwhere(pltdata==pltdata.max()),pltdata.max()]
+
+plt.scatter(sols_min[0],sols_min[1],c='b',label='Minumum steps')
+[plt.scatter(sols_max[0][i],sols_max[1],c='r',label='Maximum steps') for i in range(2)]
+plt.legend()
 
